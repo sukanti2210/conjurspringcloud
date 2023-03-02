@@ -56,7 +56,7 @@ public class ConjurValueProcessor implements BeanPostProcessor, InitializingBean
 	private ConjurPropertySource propertySource;
 
 	@Autowired
-	private ConjurProperties conjurParam;
+	private ConjurProperties conjurProperties;
 	
 
 	private PropertyProcessorChain processorChain;
@@ -72,8 +72,8 @@ public class ConjurValueProcessor implements BeanPostProcessor, InitializingBean
 	public void afterPropertiesSet() throws Exception {
 		{
 
-		LOGGER.debug("Start : afterPropertiesSet" + conjurParam);}
-		initializeSysEnv(conjurParam);
+		LOGGER.info("Start : afterPropertiesSet" + conjurProperties);}
+		initializeSysEnv(conjurProperties);
 		
 		this.processorChain = new DefaultPropertySourceChain("DefaultPropertySource");
 		CustomPropertySourceChain customPS = new CustomPropertySourceChain("CustomPropertySource");
@@ -81,9 +81,9 @@ public class ConjurValueProcessor implements BeanPostProcessor, InitializingBean
 
 		// environment.getPropertySources().addLast(new ConjurPropertySource());
 		environment.getPropertySources().addLast(processorChain);
-		{
-		LOGGER.debug("End :afterPropertiesSet" + environment.getPropertySources());
-		}
+		
+		LOGGER.info("End :afterPropertiesSet" + environment.getPropertySources());
+		
 
 	}
 
@@ -113,6 +113,7 @@ public class ConjurValueProcessor implements BeanPostProcessor, InitializingBean
 		String authApiKey =null;// System.getenv("CONJUR_AUTHN_API_KEY");
 			
 		String authTokenFile=conjurParam.getAuthTokenFilePath();
+		LOGGER.info("Auth Token file path>>"+authTokenFile);
 			
 		if (authTokenFile != null) {
 			Map<String, String> conjurParameters = new HashMap<String, String>();
@@ -138,14 +139,15 @@ public class ConjurValueProcessor implements BeanPostProcessor, InitializingBean
 			conjurParameters.put("CONJUR_AUTHN_LOGIN", conjurParam.getAuthnLogin());
 			conjurParameters.put("CONJUR_CERT_FILE", conjurParam.getCertFile());
 			conjurParameters.put("CONJUR_SSL_CERTIFICATE", conjurParam.getSslCertificate());
+//			conjurParameters.put("CONJUR_AUTHN_TOKEN_FILE", conjurParam.getAuthTokenFile());
 			
 			apiKey=null;
 			try {
 			loadEnvironmentParameters(conjurParameters);
 			} catch (Exception e) {
-				{
-				LOGGER.error("Exception : Access token is null or worongToken, Please enter proper environment variables", e.getMessage());
-				}
+				
+				e.printStackTrace();
+				
 			}
 		
 		}

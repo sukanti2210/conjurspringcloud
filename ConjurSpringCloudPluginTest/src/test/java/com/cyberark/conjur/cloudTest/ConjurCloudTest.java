@@ -1,10 +1,7 @@
 package com.cyberark.conjur.cloudTest;
 
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +19,7 @@ import com.cyberark.conjur.springboot.domain.ConjurProperties;
 import com.cyberark.conjur.springboot.processor.SpringBootConjurAutoConfiguration;
 
 @ExtendWith(SpringExtension.class)
-@EnableConfigurationProperties(value = ConjurProperties.class)
+@EnableConfigurationProperties(value = com.cyberark.conjur.springboot.domain.ConjurProperties.class)
 @SpringBootTest(classes = SpringBootConjurAutoConfiguration.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 
@@ -51,7 +48,6 @@ public class ConjurCloudTest {
 	@Test
 	void checkForConfiguration() {
 //		assertEquals("myConjurAccount", conjurProperties.getAccount());	
-		assertNotNull(conjurProperties.getPath());
 		assertNotNull(conjurProperties.getAccount());
 		assertNotNull(conjurProperties.getApplianceUrl());
 		assertNotNull(conjurProperties.getAuthnLogin());

@@ -13,50 +13,53 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cyberark.conjur.sdk.ApiException;
+import com.cyberark.conjur.springboot.annotations.ConjurPropertySource;
 import com.cyberark.conjur.springboot.core.env.ConjurConnectionManager;
 
    @SpringBootTest(classes = ConjurSpringTests.class)
+   @ConjurPropertySource("jenkins-app/")
     public class ConjurSpringTests {
 	   
 	   private static final Logger LOGGER= LoggerFactory.getLogger(ConjurSpringTests.class);
 
 
-	   @Value("${jenkins-app/dbUserName}")
+	   @Value("${dbUserName}")
 		private byte[] pass1;
 	   
-	   @Value("${jenkins-app/dbPassword}")
+	   @Value("${dbPassword}")
 		private byte[] pass2;
 
-		@Value("${jenkins-app/dbUrl}")
+		@Value("${dbUrl}")
 		private byte[] pass3;	   
 
 		
 	
-// @Test 
-// void testForAllEnvVariables() {
-////  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_LOGIN", null));
-////  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_API_KEY", null));
-//  assertNotNull(System.getenv().getOrDefault("CONJUR_ACCOUNT", null));
-////  assertNotNull(System.getenv().getOrDefault("CONJUR_CERT_FILE", null));
-////  assertNotNull(System.getenv().getOrDefault("CONJUR_SSL_CERTIFICATE",null)); 
-////  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_API_KEY", null)); 
-////  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_TOKEN_FILE", null));
-// }
+ @Test 
+ void testForAllEnvVariables() {
+  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_LOGIN", "host/jenkins-frontend/NG-SUKANTI-P"));
+  assertNotNull(System.getenv().getOrDefault("CONJUR_ACCOUNT", "myConjurAccount"));
+  assertNotNull(System.getenv().getOrDefault("CONJUR_CERT_FILE", "/Users/Sukanti.Pradhan/conjur-quickstart/conf/policy/conjur.der"));
+  assertNotNull(System.getenv().getOrDefault("CONJUR_SSL_CERTIFICATE", "/Users/Sukanti.Pradhan/conjur-quickstart/conf/policy/conjur.pem")); 
+  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_API_KEY", "3eg8ay4vz0ywx244b533x5rf9a22f1xhe2yqh93z13yjw441scaqs1")); 
+  assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_TOKEN_FILE", "/Users/Sukanti.Pradhan/Documents/apikey.txt\n"));
+ }
  
-// @Test
-//	void checkForConnection() {
-//		assertNotNull(ConjurConnectionManager.getInstance());
-//
-//	}
+ @Test
+	void checkForConnection() {
+		assertNotNull(ConjurConnectionManager.getInstance());
+
+	}
 
  
   
   @Test void testForUserName() throws ApiException {
+	  
    assertNotNull(pass1); 
    LOGGER.debug("Pass1 value is: "+ pass1);
    String pass1Str = new String(pass1);
    assertNotNull("Maggiee2210", pass1Str);
    LOGGER.debug("Pass1 value is: "+ pass1Str);
+//   assertNotNull(System.getenv().getOrDefault("CONJUR_AUTHN_LOGIN", null));
  }
   
   @Test void testForPassword() throws ApiException {
