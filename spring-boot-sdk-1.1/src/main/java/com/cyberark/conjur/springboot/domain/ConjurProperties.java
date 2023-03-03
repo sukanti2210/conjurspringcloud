@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * 
- * This class defines all configuration parameters and environment variables are mapped to configuration variables by prepending
- *  CONJUR_ to the all-caps name of the configuration variable
+ *  @ConjurProperties is POJO class annotated with @ConfigurationProperties to map 
+ * conjur authentication properties which are either externalized or set as Environment 
+ * parameters. ConjurProperties attributes will be used to get connection to Conjur Server.
  *
  *
  */
